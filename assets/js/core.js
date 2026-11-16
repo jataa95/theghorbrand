@@ -71,7 +71,6 @@
     { href: "about.html", t: "About", sub: "The artist", img: "the-in-between", cur: page === "about" },
     { href: "contact.html", t: "Contact", sub: "Acquire a piece", img: "still-water", cur: page === "contact" },
   ];
-  const title = (s) => WORKS.find((w) => w.slug === s)?.title || "";
 
   // ---------- Film grain + nav + menu + page transition (injected) ----------
   document.body.insertAdjacentHTML("afterbegin", `
@@ -79,35 +78,23 @@
     <div class="pt" id="pt" aria-hidden="true"><span class="pt-logo logo"></span></div>
     <header class="nav" id="nav">
       <a href="index.html" class="nav-logo" aria-label="${BRAND}, home">${LOGO}</a>
-      <button class="nav-toggle" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
-        <span class="burger" aria-hidden="true"><i></i><i></i></span>
-        <span class="nav-toggle-t"><span class="bnd-hov" id="burger-t">Menu</span></span>
-      </button>
     </header>
-    <div class="menu" id="menu" aria-hidden="true" data-lenis-prevent>
-      <div class="menu-grid">
+    <div class="mbox" id="mbox">
+      <div class="menu" id="menu" aria-hidden="true" data-lenis-prevent>
         <nav class="menu-links" aria-label="Main">
-          ${MENU.map((m, i) => `<a href="${m.href}" data-k="${i}" style="--i:${i}" class="${m.cur ? "cur" : ""}">
-              <span class="ml-i mono">${pad2(i + 1)}</span>
+          ${MENU.map((m, i) => `<a href="${m.href}" style="--i:${i}" class="${m.cur ? "cur" : ""}" tabindex="-1">
+              <span class="ml-i mono">${m.sub}</span>
               <span class="ml-t"><span class="ml-tt">${m.t}</span></span>
-              <span class="ml-s mono">${m.sub}</span>
             </a>`).join("")}
         </nav>
-        <div class="menu-preview" aria-hidden="true">
-          ${MENU.map((m, i) => `<figure class="mp${i === 0 ? " act" : ""}" data-k="${i}"><div class="mp-bg" style="background-image:url(assets/works/thumbs/${m.img}.jpg)"></div><img src="assets/works/${m.img}.jpg" alt="" loading="lazy" /><figcaption class="mono">${title(m.img)}</figcaption></figure>`).join("")}
+        <div class="menu-meta mono">
+          <div class="mf-links">${socials().map((s) => `<a href="${s.href}"${ext(s.href)} tabindex="-1">${s.t}</a>`).join("<span>|</span>")}</div>
+          <span><i class="f-dot"></i>${WORKS.filter((w) => w.status === "available").length} originals available · Lagos <span data-clock>--:--:--</span></span>
+          <a href="contact.html" class="btn menu-cta" tabindex="-1"><span>Enquire about a piece</span><i>↗</i></a>
         </div>
+        <i class="menu-dot" aria-hidden="true"></i>
       </div>
-      <div class="menu-strip">
-        <p class="mono menu-h">From the collection</p>
-        <div class="ms-row">
-          ${WORKS.slice(0, 6).map((w, i) => `<a class="ms" href="${pieceUrl(w)}" style="--i:${i}"><img src="${thumb(w)}" alt="${w.title}" loading="lazy" /><span class="mono">${w.title}</span></a>`).join("")}
-        </div>
-      </div>
-      <div class="menu-foot">
-        <div class="mono mf-links">${socials().map((s) => `<a href="${s.href}"${ext(s.href)} class="bnd-hov">${s.t} ↗</a>`).join("")}</div>
-        <div class="mono mf-meta"><span><i class="f-dot"></i>Collection open</span><span>Lagos <span data-clock>--:--:--</span></span></div>
-        <a href="contact.html" class="btn btn-light"><span class="bnd-hov">Acquire a piece</span><i>↗</i></a>
-      </div>
+      <button class="mbtn" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><i></i><i></i></button>
     </div>`);
 
   // ---------- Footer ----------
@@ -244,34 +231,23 @@
   }
   addEventListener("pageshow", (e) => { if (e.persisted) { pt.classList.remove("cover"); pt.classList.add("open"); } });
 
-  // ---------- Menu overlay ----------
-  const menu = $("#menu"), burger = $("#burger"), burgerT = $("#burger-t");
-  const mLinks = $$(".menu-links a", menu), mPrev = $$(".mp", menu);
-  const curIdx = Math.max(0, MENU.findIndex((m) => m.cur));
-  function previewMenu(k) {
-    mPrev.forEach((f) => f.classList.toggle("act", +f.dataset.k === k));
-    mLinks.forEach((a) => a.classList.toggle("dim", +a.dataset.k !== k));
-  }
-  mLinks.forEach((a) => {
-    a.addEventListener("mouseenter", () => previewMenu(+a.dataset.k));
-    a.addEventListener("focus", () => previewMenu(+a.dataset.k));
-  });
-  $(".menu-links", menu).addEventListener("mouseleave", () => { previewMenu(curIdx); mLinks.forEach((a) => a.classList.remove("dim")); });
+  // ---------- Menu: card that opens from the bottom-right button ----------
+  const menu = $("#menu"), burger = $("#burger"), mFocus = $$("a", menu);
   function openMenu() {
-    previewMenu(curIdx); mLinks.forEach((a) => a.classList.remove("dim"));
     menu.classList.add("open"); menu.setAttribute("aria-hidden", "false");
     burger.setAttribute("aria-expanded", "true"); burger.setAttribute("aria-label", "Close menu");
-    burgerT.textContent = "Close";
-    root.classList.add("menu-open"); lenis && lenis.stop();
+    mFocus.forEach((a) => a.removeAttribute("tabindex"));
+    root.classList.add("menu-open");
   }
   function closeMenu() {
     if (!menu.classList.contains("open")) return;
     menu.classList.remove("open"); menu.setAttribute("aria-hidden", "true");
     burger.setAttribute("aria-expanded", "false"); burger.setAttribute("aria-label", "Open menu");
-    burgerT.textContent = "Menu";
-    root.classList.remove("menu-open"); lenis && lenis.start();
+    mFocus.forEach((a) => a.setAttribute("tabindex", "-1"));
+    root.classList.remove("menu-open");
   }
   burger.addEventListener("click", () => (menu.classList.contains("open") ? closeMenu() : openMenu()));
+  document.addEventListener("click", (e) => { if (menu.classList.contains("open") && !e.target.closest("#mbox")) closeMenu(); });
   addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
 
   // ---------- Text splitting into lines ----------

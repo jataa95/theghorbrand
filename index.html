@@ -13,33 +13,28 @@
   <script>(function(d,s){if(s.getItem("ghor-pt"))d.classList.add("pt-in");else if(!s.getItem("ghor-seen")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)d.classList.add("preload");})(document.documentElement,sessionStorage);</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300&family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-page="home">
   <main>
-    <!-- Hero: full-bleed studio film -->
-    <section class="hero" id="top">
-      <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto"
-        data-desktop="assets/media/hero.mp4" data-mobile="assets/media/hero-mobile.mp4"
-        data-poster-desktop="assets/media/hero-poster.jpg" data-poster-mobile="assets/media/hero-mobile.jpg"></video>
-      <div class="hero-shade"></div>
-      <div class="hero-content" id="hero-content" data-manual>
-        <p class="hero-eyebrow" data-split="wipe">Becoming · The Collection · Ogor Opene</p>
-        <h1 class="hero-title" data-split="wipe">Becoming,<br /><em>one layer</em> at a time.</h1>
-        <div class="hero-row">
-          <p class="hero-sub" data-split="wipe">Original paintings exploring identity, growth and the human experience. Painted in Lagos, collected worldwide.</p>
-          <div class="hero-btns">
-            <a href="work.html" class="btn btn-light"><span class="bnd-hov">View the collection</span><i>↗</i></a>
-            <a href="contact.html" class="btn btn-glass"><span class="bnd-hov">Enquire about a piece</span><i>↗</i></a>
+    <!-- Stage: drifting strip of paintings and studio films over a giant wordmark -->
+    <section class="stage" id="top">
+      <div class="strip" id="strip" aria-label="Paintings and studio films"><div class="strip-track" id="strip-track"></div></div>
+      <div class="stage-foot">
+        <h1 class="stage-word" aria-label="The Ghor Brand"><span class="sw-in">GHOR</span><i class="dia" aria-hidden="true"></i></h1>
+        <div class="stage-copy">
+          <p class="stage-k">The Ghor Brand©</p>
+          <p class="stage-d">Contemporary African art by Ogor Opene, exploring identity, growth and the human experience. Stay curious. Look closer.</p>
+          <div class="stage-btns">
+            <a href="work.html" class="btn"><span class="bnd-hov">View the collection</span><i>↗</i></a>
+            <a href="contact.html" class="btn btn-ghost"><span class="bnd-hov">Enquire</span><i>↗</i></a>
           </div>
         </div>
       </div>
-      <div class="hero-bar mono" id="hero-bar">
-        <span><i class="f-dot"></i><b id="hero-avail">05</b> originals available</span>
-        <span class="hide-sm">From <b data-from>₦450,000</b></span>
-        <span class="hide-sm">Featured in Metro Africana, London</span>
-        <a href="#work" class="hero-scroll"><i></i>Scroll</a>
+      <div class="stage-bar mono">
+        <span>© <span data-year></span> · Ogor Opene <b>|</b> Lagos <span data-clock>--:--:--</span> <b>|</b> <span id="stage-avail">05</span> originals available</span>
+        <span class="hide-sm"><a href="https://www.tiktok.com/@theghorbrand" target="_blank" rel="noopener">TikTok</a> <b>|</b> <a href="https://www.youtube.com/@theghorbrand" target="_blank" rel="noopener">YouTube</a></span>
       </div>
     </section>
 

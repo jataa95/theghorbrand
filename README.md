@@ -26,3 +26,15 @@ Everything lives in `assets/js/data.js`:
 - `assets/brand/ghor-logo.svg`: the Ghor mark, traced from the brand artwork; used as a CSS mask so it takes any colour
 - `assets/media/`: studio films cut from the TikTok clips with the captions, watermarks and end cards removed (`hero.mp4` is the 16:9 desktop hero, `hero-mobile.mp4` the portrait phone hero, `film-*.mp4` the 4:5 studio films), studio photos, press clippings
 - `assets/vendor/lenis.min.js`: smooth scrolling
+
+## Typography
+
+The type follows the auge-xp.com reference, using free Google Fonts stand-ins for its licensed faces:
+
+| Role | Reference face | Used here |
+| --- | --- | --- |
+| Display (wordmark, titles) | Greed Bold | Instrument Sans Bold, 85% width |
+| Text, labels, menu | PP Neue Montreal | Instrument Sans |
+| Italic accents, quotes | Farnham Display Light Italic | Fraunces Light Italic |
+
+The CSS font stacks already list the licensed names first (`--display`, `--sans` and `--serif` in `styles.css`). To use them, buy the web licences, put the `.woff2` files in `assets/fonts/` and add `@font-face` rules named `Greed`, `PP Neue Montreal` and `Farnham Display` at the top of `styles.css`.
