@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Work | The Ghor Brand</title>
+  <meta name="description" content="Becoming, the collection: original acrylic and impasto paintings by Ogor Opene (The Ghor Brand). Prices in NGN, USD, GBP, EUR and CAD." />
+  <meta property="og:title" content="Work | The Ghor Brand" />
+  <meta property="og:description" content="Becoming, the collection: original acrylic and impasto paintings by Ogor Opene (The Ghor Brand). Prices in NGN, USD, GBP, EUR and CAD." />
+  <meta property="og:image" content="/assets/works/emergence.jpg" />
+  <meta name="theme-color" content="#16120e" />
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml" />
+  <script>(function(d,s){if(s.getItem("ghor-pt"))d.classList.add("pt-in");else if(!s.getItem("ghor-seen")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)d.classList.add("preload");})(document.documentElement,sessionStorage);</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="work">
+  <main>
+    <section class="page-head">
+      <p class="eyebrow" data-split="wipe">Becoming · The Collection</p>
+      <h1 class="page-title" data-split="wipe">Work</h1>
+      <div class="page-intro">
+        <span class="mono" style="color:var(--muted)">(<span id="total">009</span>) works</span>
+        <p data-split="wipe">Acrylic, nylon and impasto on canvas. Each piece is an original from <em>Becoming</em>, a collection about identity as something still in progress.</p>
+      </div>
+    </section>
+
+    <div class="controls">
+      <div class="chips" id="chips" role="tablist" aria-label="Filter the collection"></div>
+      <div class="controls-r">
+        <div id="cur-slot"></div>
+        <div class="view-toggle" role="group" aria-label="View">
+          <button class="chip act" data-view="grid">Grid</button>
+          <button class="chip" data-view="list">List</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid3" id="grid3"></div>
+    <div class="list" id="list" hidden></div>
+    <div class="preview" id="preview" aria-hidden="true"><div class="preview-in"><img id="preview-img" alt="" /></div></div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/vendor/lenis.min.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/work.js"></script>
+</body>
+</html>

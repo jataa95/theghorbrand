@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact | The Ghor Brand</title>
+  <meta name="description" content="Enquire about an original painting, a commission or an exhibition with The Ghor Brand (Ogor Opene), Lagos." />
+  <meta property="og:title" content="Contact | The Ghor Brand" />
+  <meta property="og:description" content="Enquire about an original painting, a commission or an exhibition with The Ghor Brand (Ogor Opene), Lagos." />
+  <meta property="og:image" content="/assets/works/still-water.jpg" />
+  <meta name="theme-color" content="#16120e" />
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml" />
+  <script>(function(d,s){if(s.getItem("ghor-pt"))d.classList.add("pt-in");else if(!s.getItem("ghor-seen")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)d.classList.add("preload");})(document.documentElement,sessionStorage);</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="contact">
+  <main>
+    <section class="ct-hero">
+      <p class="eyebrow" data-split="wipe">Contact · Collection open</p>
+      <h1 class="ct-title" data-split="wipe" style="margin-top:28px">Found the one? <em>Let’s talk.</em></h1>
+    </section>
+
+    <section class="ct-body">
+      <div>
+        <div class="ct-methods" id="ct-methods"></div>
+        <div class="ct-studio">
+          <div><p class="mono f-h" style="color:var(--muted)">Studio</p><p>Lagos, Nigeria</p></div>
+          <div><p class="mono f-h" style="color:var(--muted)">Local time</p><p><span data-clock>--:--:--</span> WAT</p></div>
+        </div>
+      </div>
+
+      <form class="form" id="form" novalidate>
+        <div class="fld" id="f-name">
+          <label for="name">Your name</label>
+          <input class="npt" id="name" name="name" autocomplete="name" placeholder="Full name" />
+          <div class="fld-err">Please tell us your name.</div>
+        </div>
+        <div class="fld">
+          <span class="fld-l">I’m interested in</span>
+          <div class="radios" id="interest">
+            <input type="radio" name="interest" id="i1" value="An available piece" checked /><label for="i1">An available piece</label>
+            <input type="radio" name="interest" id="i2" value="A commission" /><label for="i2">A commission</label>
+            <input type="radio" name="interest" id="i3" value="An exhibition or press" /><label for="i3">Exhibition / press</label>
+            <input type="radio" name="interest" id="i4" value="A collaboration" /><label for="i4">Collaboration</label>
+            <input type="radio" name="interest" id="i5" value="Something else" /><label for="i5">Something else</label>
+          </div>
+        </div>
+        <div class="two">
+          <div class="fld">
+            <label for="piece">Artwork (optional)</label>
+            <select class="npt" id="piece" name="piece"><option value="">No specific piece</option></select>
+          </div>
+          <div class="fld">
+            <label for="where">Where are you based? (optional)</label>
+            <input class="npt" id="where" name="where" placeholder="City, country" autocomplete="country-name" />
+          </div>
+        </div>
+        <div class="fld" id="f-msg">
+          <label for="msg">Message</label>
+          <textarea class="npt" id="msg" name="msg" placeholder="Tell us what drew you to the work, and any questions about size, framing or delivery"></textarea>
+          <div class="fld-err">Please add a short message.</div>
+        </div>
+        <div class="form-foot">
+          <p class="form-note" id="form-note"></p>
+          <button class="btn" type="submit"><span class="bnd-hov" id="form-btn">Send enquiry</span><i>↗</i></button>
+        </div>
+        <div class="form-done" id="form-done"><p id="form-done-t"></p></div>
+      </form>
+    </section>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/vendor/lenis.min.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/contact.js"></script>
+</body>
+</html>
