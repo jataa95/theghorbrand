@@ -1,18 +1,31 @@
 /* The Ghor Brand: home page (landing) */
 (() => {
-  const { $, $$, clamp, lerp, easeInOut, pad2, wait, reduced, lenis, imgSrc, thumb, pieceUrl, card, bySlug, curSwitch, onFrame, ready } = GHOR;
+  const { $, $$, clamp, lerp, pad2, wait, reduced, lenis, imgSrc, thumb, pieceUrl, card, bySlug, curSwitch, onFrame, ready } = GHOR;
   const WORKS = window.WORKS;
   const root = document.documentElement;
 
-  // Phones show the hero film full-bleed and unblurred, so use the clip whose
-  // burned-in captions sit at the top, clear of the headline.
-  if (matchMedia("(max-width: 860px)").matches) {
-    const bg = $("#hero-bg");
-    bg.poster = "assets/media/blank-canvas-poster.jpg";
-    bg.querySelector("source").src = "assets/media/blank-canvas.mp4";
-    bg.load(); bg.play().catch(() => {});
-    $("#hero-video").removeAttribute("autoplay"); $("#hero-video").preload = "none";
-  }
+  // ---------- Hero film: landscape cut on wide screens, portrait cut on phones ----------
+  const heroV = $("#hero-video");
+  const phone = matchMedia("(max-aspect-ratio: 4/5), (max-width: 600px)").matches;
+  heroV.poster = heroV.dataset[phone ? "posterMobile" : "posterDesktop"];
+  heroV.src = heroV.dataset[phone ? "mobile" : "desktop"];
+  heroV.play().catch(() => {});
+
+  const avail = WORKS.filter((w) => w.status === "available");
+  $("#hero-avail").textContent = pad2(avail.length);
+  $("#sc-n").textContent = avail.length;
+  const from = avail.filter((w) => w.price).sort((x, y) => x.price.NGN - y.price.NGN)[0];
+  const syncFrom = () => $$("[data-from]").forEach((el) => (el.textContent = from ? GHOR.fmtPrice(from) : "On enquiry"));
+  syncFrom();
+  document.addEventListener("click", (e) => { if (e.target.closest("[data-cur]")) syncFrom(); });
+
+  // ---------- Sticky enquiry button: after the hero, hidden over the footer ----------
+  const sticky = $("#sticky-cta"), heroEl = $(".hero"), footer = $("#footer");
+  onFrame(() => {
+    const past = heroEl.getBoundingClientRect().bottom < innerHeight * 0.4;
+    const atFoot = footer && footer.getBoundingClientRect().top < innerHeight * 0.9;
+    sticky.classList.toggle("show", past && !atFoot && !root.classList.contains("menu-open"));
+  });
 
   $("#stat-works").dataset.count = WORKS.length;
   $("#stat-avail").dataset.count = WORKS.filter((w) => w.status === "available").length;
@@ -91,38 +104,14 @@
     track.style.transform = `translate3d(${mqX.toFixed(2)}px,0,0)`;
   });
 
-  // ---------- Hero / reel: corner tile grows into a gallery wall ----------
-  const intro = $(".intro"), pin = $(".intro-pin"), hero = $("#hero"), heroContent = $("#hero-content"), heroFilm = $("#hero-film");
-  const reel = $("#reel"), reelMedia = $("#reel-media"), reelCount = $("#reel-count"), reelTitle = $("#reel-title"), scrollHint = $(".hero-scroll");
-  const REEL = WORKS;
-  reelMedia.innerHTML = REEL.map((w, i) => `<figure class="rm"><div class="rm-bg" style="background-image:url(${thumb(w)})"></div><img src="${imgSrc(w)}" alt=""${i ? ' loading="lazy"' : ""} /></figure>`).join("");
-  const reelItems = $$(".rm", reelMedia);
-  reelItems[0].classList.add("act"); reelTitle.textContent = REEL[0].title;
-  let reelI = 0, reelT = 0, reelBig = 0;
-  onFrame((now) => {
-    if (now - reelT >= (reelBig > 0.5 ? 2600 : 1400)) {
-      reelT = now;
-      reelItems[reelI].classList.remove("act");
-      reelI = (reelI + 1) % reelItems.length;
-      const it = reelItems[reelI]; void it.offsetWidth; it.classList.add("act");
-      reelCount.textContent = `${pad2(reelI + 1)}/${pad2(reelItems.length)}`;
-      reelTitle.textContent = REEL[reelI].title;
-    }
-    const W = innerWidth, H = pin.offsetHeight;
-    const p = clamp(-intro.getBoundingClientRect().top / (intro.offsetHeight - H));
-    const e = easeInOut(p); reelBig = e;
-    const pd = W < 860 ? 16 : 20, w0 = W < 860 ? 110 : 168, h0 = Math.round(w0 * 1.25);
-    const s = reel.style;
-    s.setProperty("--rx", `${lerp(W - pd - w0, pd, e)}px`); s.setProperty("--ry", `${lerp(H - pd - h0, pd, e)}px`);
-    s.setProperty("--rw", `${lerp(w0, W - pd * 2, e)}px`); s.setProperty("--rh", `${lerp(h0, H - pd * 2, e)}px`);
-    s.setProperty("--rr", `${lerp(2, 5, e)}px`); s.setProperty("--rp", e.toFixed(3));
-    s.setProperty("--rl", clamp((e - 0.55) / 0.3).toFixed(3));
-    if (!root.classList.contains("is-loading")) {
-      heroContent.style.opacity = (1 - clamp(e * 1.8)).toFixed(3);
-      heroContent.style.transform = `translateY(${-e * 70}px)`;
-      heroFilm.style.setProperty("--fy", `${-e * 40}px`);
-      scrollHint.style.setProperty("--so", (1 - clamp(e * 4)).toFixed(3));
-    }
+  // ---------- Hero: gentle parallax as it scrolls away ----------
+  const heroContent = $("#hero-content");
+  onFrame(() => {
+    if (reduced || root.classList.contains("is-loading")) return;
+    const r = heroEl.getBoundingClientRect(), p = clamp(-r.top / r.height);
+    heroV.style.transform = `translate3d(0, ${(p * r.height * 0.25).toFixed(1)}px, 0) scale(${(1.04 + p * 0.06).toFixed(4)})`;
+    heroContent.style.opacity = (1 - clamp(p * 1.6)).toFixed(3);
+    heroContent.style.transform = `translateY(${(-p * 60).toFixed(1)}px)`;
   });
 
   // ---------- Intro: hand-off from the preloader into the hero ----------
@@ -130,23 +119,24 @@
   async function boot() {
     if (lenis) lenis.stop();
     await ready;
-    const hs = hero.style;
+    const hs = heroEl.style;
     const setFrame = (t, r, b, l, rad) => { hs.setProperty("--ht", t); hs.setProperty("--hr", r); hs.setProperty("--hb", b); hs.setProperty("--hl", l); hs.setProperty("--hrad", rad); };
+    const reveal = () => { heroContent.classList.add("in"); $$("[data-split]", heroContent).forEach((el) => el.classList.add("in")); };
     if (played && !reduced) {
-      setFrame("36%", "42%", "36%", "42%", "4px");
+      setFrame("36%", "30%", "36%", "30%", "4px");
       await GHOR.preloaded;
       await wait(450);
-      hero.style.transition = "clip-path 1.3s cubic-bezier(.771,.029,.189,1.007)";
+      heroEl.style.transition = "clip-path 1.3s cubic-bezier(.771,.029,.189,1.007)";
       setFrame("0%", "0%", "0%", "0%", "0px");
       await wait(800);
       root.classList.remove("is-loading");
-      heroContent.classList.add("in"); $$("[data-split]", heroContent).forEach((el) => el.classList.add("in"));
+      reveal();
       await wait(700);
-      hero.style.transition = "";
+      heroEl.style.transition = "";
     } else {
       root.classList.remove("is-loading");
       await wait(250);
-      heroContent.classList.add("in"); $$("[data-split]", heroContent).forEach((el) => el.classList.add("in"));
+      reveal();
     }
     if (lenis) lenis.start();
   }

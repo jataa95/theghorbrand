@@ -18,37 +18,28 @@
 </head>
 <body data-page="home">
   <main>
-    <!-- Hero: pinned; the corner tile grows into a full gallery wall as you scroll -->
-    <section class="intro" id="top">
-      <div class="intro-pin">
-        <div class="hero" id="hero">
-          <video class="hero-bg" id="hero-bg" autoplay muted loop playsinline preload="auto" poster="assets/media/process-poster.jpg" aria-hidden="true">
-            <source src="assets/media/process.mp4" type="video/mp4" />
-          </video>
-          <div class="hero-shade"></div>
-          <div class="hero-film" id="hero-film">
-            <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/media/process-poster.jpg">
-              <source src="assets/media/process.mp4" type="video/mp4" />
-            </video>
-            <span class="hero-film-cap mono">In the studio · Lagos</span>
+    <!-- Hero: full-bleed studio film -->
+    <section class="hero" id="top">
+      <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto"
+        data-desktop="assets/media/hero.mp4" data-mobile="assets/media/hero-mobile.mp4"
+        data-poster-desktop="assets/media/hero-poster.jpg" data-poster-mobile="assets/media/hero-mobile.jpg"></video>
+      <div class="hero-shade"></div>
+      <div class="hero-content" id="hero-content" data-manual>
+        <p class="hero-eyebrow" data-split="wipe">Becoming · The Collection · Ogor Opene</p>
+        <h1 class="hero-title" data-split="wipe">Becoming,<br /><em>one layer</em> at a time.</h1>
+        <div class="hero-row">
+          <p class="hero-sub" data-split="wipe">Original paintings exploring identity, growth and the human experience. Painted in Lagos, collected worldwide.</p>
+          <div class="hero-btns">
+            <a href="work.html" class="btn btn-light"><span class="bnd-hov">View the collection</span><i>↗</i></a>
+            <a href="contact.html" class="btn btn-glass"><span class="bnd-hov">Enquire about a piece</span><i>↗</i></a>
           </div>
-          <div class="hero-content" id="hero-content" data-manual>
-            <p class="hero-eyebrow" data-split="wipe">The Ghor Brand · Ogor Opene · Contemporary African art</p>
-            <h1 class="hero-title" data-split="wipe">Becoming,<br /><em>one layer</em> at a time.</h1>
-            <p class="hero-sub" data-split="wipe">Paintings exploring identity, growth and the human experience. Stay curious. Look closer.</p>
-            <div class="hero-btns">
-              <a href="work.html" class="btn btn-light"><span class="bnd-hov">View the collection</span><i>↗</i></a>
-              <a href="contact.html" class="btn btn-glass"><span class="bnd-hov">Acquire a piece</span><i>↗</i></a>
-            </div>
-          </div>
-          <div class="hero-scroll mono"><i></i>Scroll</div>
         </div>
-        <a class="reel" id="reel" href="work.html" aria-label="View the collection">
-          <div class="reel-media" id="reel-media"></div>
-          <span class="reel-label">Becoming · The Collection ↗</span>
-          <span class="reel-title mono" id="reel-title"></span>
-          <span class="reel-count mono" id="reel-count">01/09</span>
-        </a>
+      </div>
+      <div class="hero-bar mono" id="hero-bar">
+        <span><i class="f-dot"></i><b id="hero-avail">05</b> originals available</span>
+        <span class="hide-sm">From <b data-from>₦450,000</b></span>
+        <span class="hide-sm">Featured in Metro Africana, London</span>
+        <a href="#work" class="hero-scroll"><i></i>Scroll</a>
       </div>
     </section>
 
@@ -58,21 +49,6 @@
       <div class="stat fade" data-reveal><div class="stat-n"><span data-count="1333" data-sep>0</span></div><p class="stat-l">Followers watching the process</p></div>
       <div class="stat fade" data-reveal><div class="stat-n"><span data-count="9" data-pad="2" id="stat-works">00</span></div><p class="stat-l">Works in <em>Becoming</em></p></div>
       <div class="stat fade" data-reveal><div class="stat-n"><span data-count="5" data-pad="2" id="stat-avail">00</span></div><p class="stat-l">Available to collect now</p></div>
-    </section>
-
-    <!-- About teaser -->
-    <section class="about" id="about">
-      <div class="about-side">
-        <p class="label" data-split="wipe">About</p>
-        <div class="about-cycle mono" id="about-cycle" aria-hidden="true">
-          <span class="act">Painter</span><span>Storyteller</span><span>Acrylic &amp; impasto</span><span>Identity</span><span>Growth</span>
-        </div>
-      </div>
-      <div class="about-main">
-        <p class="about-lead" data-split="fill">The Ghor Brand is the studio of Ogor Opene, a Nigerian painter making contemporary African art about identity, growth and the human experience.</p>
-        <p class="about-sub" data-split="wipe">Acrylic, nylon and thick impasto on canvas. Figures caught mid-transformation: still forming, still questioning, still learning who they are beyond the expectations placed upon them.</p>
-        <a href="about.html" class="btn btn-ghost about-more"><span class="bnd-hov">More about the artist</span><i>↗</i></a>
-      </div>
     </section>
 
     <!-- Selected work -->
@@ -107,25 +83,18 @@
       </div>
     </section>
 
-    <!-- Studio films -->
-    <section class="films" id="films">
-      <div class="sec-head">
-        <h2 class="h2" data-split="wipe">From the studio</h2>
-        <a href="https://www.tiktok.com/@theghorbrand" target="_blank" rel="noopener" class="mono bnd-hov">More on TikTok ↗</a>
+    <!-- About teaser -->
+    <section class="about" id="about">
+      <div class="about-side">
+        <p class="label" data-split="wipe">About</p>
+        <div class="about-cycle mono" id="about-cycle" aria-hidden="true">
+          <span class="act">Painter</span><span>Storyteller</span><span>Acrylic &amp; impasto</span><span>Identity</span><span>Growth</span>
+        </div>
       </div>
-      <div class="films-row">
-        <figure class="film" data-reveal style="--i:0">
-          <div class="film-frame"><video muted loop playsinline preload="none" poster="assets/media/blank-canvas-poster.jpg"><source src="assets/media/blank-canvas.mp4" type="video/mp4" /></video></div>
-          <figcaption><span class="mono">01</span><span>The process, from a blank canvas</span></figcaption>
-        </figure>
-        <figure class="film" data-reveal style="--i:1">
-          <div class="film-frame"><video muted loop playsinline preload="none" poster="assets/media/process-poster.jpg"><source src="assets/media/process.mp4" type="video/mp4" /></video></div>
-          <figcaption><span class="mono">02</span><span>Six months of overthinking, one painting</span></figcaption>
-        </figure>
-        <figure class="film" data-reveal style="--i:2">
-          <div class="film-frame"><video muted loop playsinline preload="none" poster="assets/media/exhibition-poster.jpg"><source src="assets/media/exhibition.mp4" type="video/mp4" /></video></div>
-          <figcaption><span class="mono">03</span><span>On the gallery wall</span></figcaption>
-        </figure>
+      <div class="about-main">
+        <p class="about-lead" data-split="fill">The Ghor Brand is the studio of Ogor Opene, a Nigerian painter making contemporary African art about identity, growth and the human experience.</p>
+        <p class="about-sub" data-split="wipe">Acrylic, nylon and thick impasto on canvas. Figures caught mid-transformation: still forming, still questioning, still learning who they are beyond the expectations placed upon them.</p>
+        <a href="about.html" class="btn btn-ghost about-more"><span class="bnd-hov">More about the artist</span><i>↗</i></a>
       </div>
     </section>
 
@@ -139,6 +108,28 @@
           <div class="testi-art" id="testi-art" aria-hidden="true"></div>
         </div>
         <div class="testi-tabs" id="testi-tabs" role="tablist"></div>
+      </div>
+    </section>
+
+    <!-- Studio films -->
+    <section class="films" id="films">
+      <div class="sec-head">
+        <h2 class="h2" data-split="wipe">From the studio</h2>
+        <a href="https://www.tiktok.com/@theghorbrand" target="_blank" rel="noopener" class="mono bnd-hov">More on TikTok ↗</a>
+      </div>
+      <div class="films-row">
+        <figure class="film" data-reveal style="--i:0">
+          <div class="film-frame"><video muted loop playsinline preload="none" poster="assets/media/film-blank-canvas.jpg"><source src="assets/media/film-blank-canvas.mp4" type="video/mp4" /></video></div>
+          <figcaption><span class="mono">01</span><span>Starting from a blank canvas</span></figcaption>
+        </figure>
+        <figure class="film" data-reveal style="--i:1">
+          <div class="film-frame"><video muted loop playsinline preload="none" poster="assets/media/film-final-layers.jpg"><source src="assets/media/film-final-layers.mp4" type="video/mp4" /></video></div>
+          <figcaption><span class="mono">02</span><span>The final layers of <em>Emergence</em></span></figcaption>
+        </figure>
+        <figure class="film" data-reveal style="--i:2">
+          <div class="film-frame"><video muted loop playsinline preload="none" poster="assets/media/film-gallery.jpg"><source src="assets/media/film-gallery.mp4" type="video/mp4" /></video></div>
+          <figcaption><span class="mono">03</span><span>On the gallery wall</span></figcaption>
+        </figure>
       </div>
     </section>
 
@@ -168,6 +159,8 @@
       <div class="marquee-names mono"><span>Identity</span><span>Growth</span><span>Silence</span><span>Courage</span><span>Becoming</span></div>
     </section>
   </main>
+
+  <a href="contact.html" class="sticky-cta" id="sticky-cta" aria-label="Enquire about a piece"><span class="f-dot"></span><span class="sc-t"><b id="sc-n">5</b> available · Enquire</span><i>↗</i></a>
 
   <div id="app-footer"></div>
 

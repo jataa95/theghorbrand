@@ -24,5 +24,5 @@ Everything lives in `assets/js/data.js`:
 ## Assets
 
 - `assets/brand/ghor-logo.svg`: the Ghor mark, traced from the brand artwork; used as a CSS mask so it takes any colour
-- `assets/media/`: studio films (TikTok clips, sound removed), studio photos, press clippings
+- `assets/media/`: studio films cut from the TikTok clips with the captions, watermarks and end cards removed (`hero.mp4` is the 16:9 desktop hero, `hero-mobile.mp4` the portrait phone hero, `film-*.mp4` the 4:5 studio films), studio photos, press clippings
 - `assets/vendor/lenis.min.js`: smooth scrolling
