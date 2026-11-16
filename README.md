@@ -8,7 +8,7 @@ A static site with plain HTML, CSS and JavaScript and no build step. Deploy the 
 
 | File | What it is |
 | --- | --- |
-| `index.html` | Landing: studio-film hero, a painting reel that grows to full screen, selected work, the London press feature, studio films, notes on the paintings, collecting steps, collection marquee |
+| `index.html` | Landing: a drifting, draggable strip of paintings, studio films and studio photos over the GHOR wordmark, then selected work, the London press feature, notes on the paintings, studio films, collecting steps and the full collection |
 | `work.html` | The *Becoming* collection with filters (available, sold, drop 02 / 03), grid or list view, and a currency switch |
 | `piece.html?w=<slug>` | A single painting: price in NGN/USD/GBP/EUR/CAD, specs, enquiry buttons, next work |
 | `about.html` | The artist, themes, exhibition film, press clippings |
@@ -18,13 +18,13 @@ A static site with plain HTML, CSS and JavaScript and no build step. Deploy the 
 
 Everything lives in `assets/js/data.js`:
 
-- `WORKS`: title, size, medium, drop (`vol`), `status` (`available` / `sold` / `enquire`), prices and the short statement for each painting. Images are `assets/works/<slug>.jpg`, plus a small copy in `assets/works/thumbs/`.
+- `WORKS`: title, size, medium, drop (`vol`), `status` (`available` / `sold` / `enquire`), prices and the short statement for each painting. Images are `assets/works/<slug>.jpg`, with a small copy in `assets/works/thumbs/` and a frame-trimmed, sharpened copy for the home strip in `assets/works/tiles/`.
 - `CONTACT`: **add a WhatsApp number and/or an email here.** Enquiry buttons and the contact form use WhatsApp first, then email, and fall back to TikTok DMs while neither is set. An Instagram link appears once `instagram` is filled in.
 
 ## Assets
 
 - `assets/brand/ghor-logo.svg`: the Ghor mark, traced from the brand artwork; used as a CSS mask so it takes any colour
-- `assets/media/`: studio films cut from the TikTok clips with the captions, watermarks and end cards removed (`hero.mp4` is the 16:9 desktop hero, `hero-mobile.mp4` the portrait phone hero, `film-*.mp4` the 4:5 studio films), studio photos, press clippings
+- `assets/media/`: studio films cut from the TikTok clips with the captions, watermarks and end cards removed (`film-*.mp4`, 4:5, used in the home strip and on the About page), studio photos, press clippings
 - `assets/vendor/lenis.min.js`: smooth scrolling
 
 ## Typography

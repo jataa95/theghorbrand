@@ -10,18 +10,32 @@
     "film-blank-canvas": "From a blank canvas",
     "film-gallery": "On the gallery wall",
   };
-  const ORDER = ["film-final-layers", "right-on-time", "emergence", "film-blank-canvas", "when-the-world-went-quiet", "the-in-between",
-    "film-gallery", "still-water", "a-life-unwritten", "the-courage-to-speak", "inheritance-of-silence", "unspoken-dreams"];
-  const HEIGHTS = [.62, .74, .9, .56, .96, .7, .82, .6, .88, .68, .78, .94];
+  const STUDIO = {
+    "studio-right-on-time": "With Right On Time",
+    "studio-hold": "Ogor Opene, Lagos",
+  };
+  // Painting tiles keep the canvas's real proportions (frame trimmed off), so the row staggers naturally.
+  const RATIO = {
+    "a-life-unwritten": .683, "emergence": .569, "inheritance-of-silence": .677, "right-on-time": .802, "still-water": .644,
+    "the-courage-to-speak": .684, "the-in-between": .75, "unspoken-dreams": .699, "when-the-world-went-quiet": .75,
+    "film-final-layers": .8, "film-blank-canvas": .8, "film-gallery": .8, "studio-right-on-time": .75, "studio-hold": .75,
+  };
+  const ORDER = ["right-on-time", "film-final-layers", "emergence", "when-the-world-went-quiet", "studio-right-on-time", "the-in-between",
+    "film-blank-canvas", "still-water", "the-courage-to-speak", "studio-hold", "a-life-unwritten", "film-gallery", "inheritance-of-silence", "unspoken-dreams"];
+  const capFor = (w) => `${GHOR.statusLabel(w)}${w.price ? " · " + GHOR.fmtPrice(w) : ""}`;
   const tileHTML = (k, i, clone) => {
-    const h = `--h:${(HEIGHTS[i % HEIGHTS.length] * 84).toFixed(0)}%;--i:${clone ? 0 : i}`;
-    if (FILMS[k]) return `<a class="tile is-film" href="https://www.tiktok.com/@theghorbrand" target="_blank" rel="noopener" style="${h}" aria-label="Studio film: ${FILMS[k]}">
+    const st = `--ar:${RATIO[k]};--i:${clone ? 0 : i}`;
+    const lazy = i > 4 || clone ? ' loading="lazy"' : "";
+    if (FILMS[k]) return `<a class="tile is-film" href="https://www.tiktok.com/@theghorbrand" target="_blank" rel="noopener" style="${st}" aria-label="Studio film: ${FILMS[k]}">
         <div class="tile-media"><video muted loop playsinline autoplay preload="${clone ? "none" : "metadata"}" poster="assets/media/${k}.jpg"><source src="assets/media/${k}.mp4" type="video/mp4" /></video></div>
         <div class="tile-cap"><b>Studio film</b><span>${FILMS[k]}</span></div></a>`;
+    if (STUDIO[k]) return `<a class="tile" href="about.html" style="${st}">
+        <div class="tile-media"><img src="assets/works/tiles/${k}.jpg" alt="Ogor Opene in the studio"${lazy} /></div>
+        <div class="tile-cap"><b>The artist</b><span>${STUDIO[k]}</span></div></a>`;
     const w = bySlug(k);
-    return `<a class="tile" href="${pieceUrl(w)}" style="${h}">
-        <div class="tile-media"><img src="${imgSrc(w)}" alt="${w.title}, painting by Ogor Opene"${i > 5 || clone ? ' loading="lazy"' : ""} /></div>
-        <div class="tile-cap"><b>${w.title}</b><span>${GHOR.statusLabel(w)}${w.price ? " · " + GHOR.fmtPrice(w) : ""}</span></div></a>`;
+    return `<a class="tile" href="${pieceUrl(w)}" style="${st}" data-slug="${k}">
+        <div class="tile-media"><img src="assets/works/tiles/${k}.jpg" alt="${w.title}, painting by Ogor Opene"${lazy} /></div>
+        <div class="tile-cap"><b>${w.title}</b><span>${capFor(w)}</span></div></a>`;
   };
   {
   const track = $("#strip-track"), strip = $("#strip");
@@ -45,17 +59,27 @@
     const half = track.scrollWidth / 2;
     if (half) { while (sx <= -half) sx += half; while (sx > 0) sx -= half; }
     track.style.transform = `translate3d(${sx.toFixed(2)}px,0,0)`;
-    // touch screens: caption the tile that sits near the left edge
-    if (now - actT > 200 && matchMedia("(hover: none)").matches) {
+    // touch screens: caption the first tile that is fully on screen
+    if (now - actT > 150 && matchMedia("(hover: none)").matches) {
       actT = now;
-      let best = null, bd = 1e9;
-      tiles.forEach((t) => { const r = t.getBoundingClientRect(); const d = Math.abs(r.left - innerWidth * 0.04); if (d < bd) { bd = d; best = t; } });
+      const best = tiles.find((t) => { const r = t.getBoundingClientRect(); return r.left >= 4 && r.right <= innerWidth; });
       tiles.forEach((t) => t.classList.toggle("act", t === best));
     }
   });
   // films in the strip only play while the stage is on screen
   new IntersectionObserver(([en]) => $$("video", track).forEach((v) => (en.isIntersecting ? v.play().catch(() => {}) : v.pause())), { threshold: 0.05 }).observe(strip);
-  document.addEventListener("click", (e) => { if (e.target.closest("[data-cur]")) $$(".tile:not(.is-film) .tile-cap span", track).forEach((sp, i) => { const w = bySlug(ORDER.filter((k) => !FILMS[k])[i % (ORDER.length - 3)]); sp.textContent = `${GHOR.statusLabel(w)}${w.price ? " · " + GHOR.fmtPrice(w) : ""}`; }); });
+  document.addEventListener("click", (e) => { if (e.target.closest("[data-cur]")) $$(".tile[data-slug]", track).forEach((t) => ($(".tile-cap span", t).textContent = capFor(bySlug(t.dataset.slug)))); });
+
+  // phones: the wordmark is sized to fill the width exactly
+  const word = $(".sw-in");
+  const fitWord = () => {
+    word.style.fontSize = "";
+    if (innerWidth >= 860) return;
+    const foot = word.closest(".stage-foot"), cs = getComputedStyle(foot);
+    const avail = foot.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight), w = word.getBoundingClientRect().width;
+    if (w) word.style.fontSize = `${(parseFloat(getComputedStyle(word).fontSize) * avail / w).toFixed(2)}px`;
+  };
+  document.fonts.ready.then(fitWord); addEventListener("load", fitWord); addEventListener("resize", fitWord);
   }
 
   const avail = WORKS.filter((w) => w.status === "available");
